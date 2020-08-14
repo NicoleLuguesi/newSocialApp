@@ -6,7 +6,7 @@ const app = express();
 //connect DataBase
 connectDB();
 
-// MIDDLEWARE
+// MIDDLEWARE - body parser
 app.use(express.json());
 
 //app.get('/', (req, res) => res.send('API Running'));

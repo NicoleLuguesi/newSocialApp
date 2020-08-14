@@ -1,3 +1,4 @@
 {
-  "mongoURI": "mongodb+srv://socialapp:socialapp@newsocialapp.udley.mongodb.net/<dbname>?retryWrites=true&w=majority"
+  "mongoURI": "mongodb+srv://socialapp:socialapp@newsocialapp.udley.mongodb.net/<dbname>?retryWrites=true&w=majority",
+  "jwtSecret": "mySecretToken"
 }
