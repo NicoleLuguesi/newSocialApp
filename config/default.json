@@ -1,0 +1,3 @@
+{
+  "mongoURI": "mongodb+srv://socialapp:socialapp@newsocialapp.udley.mongodb.net/<dbname>?retryWrites=true&w=majority"
+}
