@@ -1,6 +1,0 @@
-{
-  "mongoURI": "mongodb+srv://socialapp:socialapp@newsocialapp.udley.mongodb.net/<dbname>?retryWrites=true&w=majority",
-  "jwtSecret": "mySecretToken",
-  "githubClientId": "6a8ded17c2283dfd5a5a",
-  "githubSecret": "aeefc42a9e1addbbe47ed8365eba897a015b9681"
-}
