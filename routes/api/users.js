@@ -3,6 +3,7 @@ const router = express.Router();
 const gravatar = require('gravatar');
 const brcypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const isEmpty = require("../../utils/isEmpty");
 const config = require('config');
 const { check, validationResult } = require('express-validator/check');
 
@@ -73,5 +74,46 @@ router.post('/', [
     res.status(500).send('Server error')
   }
 });
+
+// @route		PUT api/users
+// @desc		login route
+// @access	public
+router.put(
+  "/",
+[
+  check("email", "Email Required").notEmpty(),
+  check("email", "Valid Email Required").isEmail(),
+  check("password", "Password Required").notEmpty(),
+],
+async (req, res) => {
+  const errors = validationResult(req);
+  if(!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array()});
+  }
+
+  try {
+    const user = await User.findOne({ email: req.body.email });
+
+    if(isEmpty(user)) {
+      return res.status(400).json({ errors: {message: "Invalid Login"}});
+    }
+
+    User.findOneAndUpdate(user._id, { lastLogin: Date.now() });
+    
+    const payload = {
+      id: user._id,
+      email: user.email,
+    };
+
+    const token = jwt.sign(payload, config.jwtSecret, {});
+
+    res.json(token)
+
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json(err );
+  }
+ }
+);
 
 module.exports = router;

@@ -31,11 +31,13 @@ router.get('/me', auth, async (req, res) => {
 router.post(
   '/', 
   [
-    auth, 
-    [
+  auth, 
+[
+  check("firstName", "First name is required").notEmpty(),
+  check("lastName", "Last name is required").notEmpty(),
   check('status', 'Status is required').notEmpty(),
   check('skills', 'Skills is required').notEmpty()
-  ]
+]
 ],
 async (req, res) => {
   const errors = validationResult(req);
@@ -43,6 +45,8 @@ async (req, res) => {
     return res.status(400).json({ errors: errors.array()});
     }
     const {
+      firstName,
+      lastName,
       company,
       website,
       location,
@@ -58,7 +62,12 @@ async (req, res) => {
     } = req.body;
 
     // build profile fields
-    const profileFields = {};
+    const profileFields = {
+      firstName: firstName.trim(),
+      lastName: lastName.trim(),
+      // name: `${firstName.trim()} ${lastName.trim()}`,
+      // initials: `${firstName[0]}${lastName[0]}`
+    };
     profileFields.user = req.user.id;
     if(company) profileFields.company = company;
     if(website) profileFields.website = website;
